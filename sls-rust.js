@@ -8,7 +8,7 @@ class SlsRust {
     this.serverless = serverless
     this.log = serverless.cli.log
     this.options = options
-    this.targetRuntime = 'x86_64-unknown-linux-musl'
+    this.targetRuntime = 'aarch64-unknown-linux-gnu'
     this.hooks = {
       'before:package:createDeploymentArtifacts': this.buildPrepare.bind(this),
       'before:deploy:function:packageFunction': this.buildPrepare.bind(this),
@@ -58,7 +58,7 @@ class SlsRust {
   async runBuildCommand ({ path, projectName }) {
     try {
       await this.runCommand({ 
-        command: `cargo build --release --target ${this.targetRuntime}`, 
+        command: `cargo zigbuild --release --target ${this.targetRuntime}`, 
         cwd: path,
       })
     } catch (error) {
